@@ -33,6 +33,42 @@ end
 //
 DELIMITER ;
 
+## shopingcart
+
+    composer require gloudemans/shoppingcart
+    
+* config app
+    Package Service Providers...
+    Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+    
+    Class Aliases
+    'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+
+* php amake:controller CartController --resource
+    Route::resource('cart','CartController');
+    
+*   En el controlador
+    use Gloudemans\Shoppingcart\Facades\Cart;
+
+    public function index()
+    {
+        $items=Cart::content();
+        return view('cart.index',compact('items'));
+    }
+
+    public function edit($id)
+    {
+        $producto=Product::find($id);
+        Cart::add($id, $producto->nombre,1,$producto->precio);
+        return back();
+    }
+    
+    public function update(Request $request, $id)
+    {
+        Cart::update($id,$request->qty);
+        return back();
+    }
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

@@ -1,0 +1,18 @@
+        require_once "../vendor/mercadopago/sdk/lib/mercadopago.php";
+
+        $mp = new MP ("1705553029705790", "GRjYlJNkVvkdIVcw3NWxF9fvrOqrj246");
+        foreach ($cart as $valor){
+        $preference_data = array(
+        "items" => array(
+                        array(
+                        "title" => $valor->name,
+                        "currency_id" => "ARS",
+                        "category_id" => $valor->id,
+                        "quantity" => $valor->qty,
+                        'picture_url'=>'http://127.0.0.1:8000/imagenes/t-shirt/'.$valor->image,
+                        "unit_price" => $valor->price
+                        )
+                    ),
+        );}
+        $preference = $mp->create_preference ($preference_data);
+        return view('cart.create',compact('preference'));

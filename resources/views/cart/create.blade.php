@@ -1,0 +1,1 @@
+<a href="<?php echo $preference['response']['sandbox_init_point']; ?>" class="btn btn-primary">Pay</a>
